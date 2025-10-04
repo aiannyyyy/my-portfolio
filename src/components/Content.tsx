@@ -1,0 +1,956 @@
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, Github, Linkedin, Mail, ExternalLink, Code, Palette, Smartphone, Globe, Star, ArrowRight, RotateCcw } from 'lucide-react';
+
+// Navbar Component
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setDarkMode(prefersDark);
+    if (prefersDark) {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    if (darkMode) {
+      document.documentElement.classList.remove("dark");
+      setDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      setDarkMode(true);
+    }
+  };
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const navItems = [
+    { href: "#about", label: "About" },
+    { href: "#skills", label: "Skills" },
+    { href: "#projects", label: "Projects" },
+    { href: "#contact", label: "Contact" }
+  ];
+  
+  return (
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
+      scrolled 
+        ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl shadow-2xl shadow-violet-500/10 border-b border-violet-200/30 dark:border-violet-800/30' 
+        : 'bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl'
+    }`}>
+      
+      <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-violet-500 via-blue-500 to-transparent opacity-80"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          
+          <a
+            href="#home"
+            className="group transform hover:scale-105 transition-transform duration-300"
+          >
+            <div className="h-12 w-12 bg-gradient-to-r from-violet-600 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
+              <img
+                src="/public/logo.jpg"
+                alt="Logo"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </a>
+
+          <div className="hidden md:flex items-center space-x-2">
+            {navItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className="relative px-5 py-2.5 text-slate-700 dark:text-slate-200 font-semibold rounded-full transition-all duration-500 hover:text-violet-600 dark:hover:text-violet-400 group overflow-hidden"
+              >
+                <span className="relative z-10 transition-all duration-300 group-hover:text-white dark:group-hover:text-white">
+                  {item.label}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-blue-600 rounded-full scale-0 group-hover:scale-100 transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-blue-600/20 dark:from-violet-500/20 dark:to-blue-500/20 rounded-full scale-0 group-hover:scale-110 transition-all duration-700"></div>
+              </a>
+            ))}
+
+            <button
+              onClick={toggleDarkMode}
+              className="relative ml-4 p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-gradient-to-r hover:from-violet-100 hover:to-blue-100 dark:hover:from-violet-900/50 dark:hover:to-blue-900/50 transition-all duration-500 group border border-slate-200/50 dark:border-slate-700/50 shadow-lg"
+            >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className={`relative z-10 transform transition-all duration-700 ${darkMode ? 'rotate-180' : 'rotate-0'}`}>
+                {darkMode ? 
+                  <span className="block w-5 h-5 text-amber-400">☀</span> : 
+                  <span className="block w-5 h-5 text-slate-600 dark:text-slate-300">🌙</span>
+                }
+              </div>
+            </button>
+          </div>
+
+          <button
+            onClick={toggleMenu}
+            className="md:hidden relative p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-violet-100 dark:hover:bg-violet-900/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 shadow-lg"
+          >
+            <div className={`transform transition-all duration-500 ${isOpen ? 'rotate-180 scale-110' : 'rotate-0'}`}>
+              {isOpen ? 
+                <span className="block w-6 h-6 text-slate-600 dark:text-slate-300">✕</span> : 
+                <span className="block w-6 h-6 text-slate-600 dark:text-slate-300">☰</span>
+              }
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div className={`md:hidden transition-all duration-700 ease-in-out overflow-hidden ${
+        isOpen 
+          ? 'max-h-screen opacity-100 transform translate-y-0' 
+          : 'max-h-0 opacity-0 transform -translate-y-4'
+      }`}>
+        <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border-t border-violet-200/30 dark:border-violet-800/30 shadow-2xl">
+          <div className="px-6 py-8 space-y-2">
+            {navItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className="block px-6 py-4 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl transition-all duration-500 hover:bg-gradient-to-r hover:from-violet-50 hover:to-blue-50 dark:hover:from-violet-900/30 dark:hover:to-blue-900/30 hover:text-violet-600 dark:hover:text-violet-400 hover:translate-x-2 transform border border-transparent hover:border-violet-200/50 dark:hover:border-violet-700/50"
+                onClick={toggleMenu}
+              >
+                {item.label}
+              </a>
+            ))}
+
+            <button
+              onClick={() => { toggleDarkMode(); toggleMenu(); }}
+              className="flex items-center gap-4 w-full px-6 py-4 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl transition-all duration-500 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900/30 dark:hover:to-orange-900/30 hover:translate-x-2 transform border border-transparent hover:border-amber-200/50 dark:hover:border-amber-700/50 mt-4"
+            >
+              <div className={`transform transition-all duration-700 ${darkMode ? 'rotate-180' : 'rotate-0'}`}>
+                {darkMode ? 
+                  <span className="block w-5 h-5 text-amber-400">☀</span> : 
+                  <span className="block w-5 h-5">🌙</span>
+                }
+              </div>
+              <span className="hover:text-amber-600 dark:hover:text-amber-400">
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default function ModernPortfolio() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
+  const [activeSkillTab, setActiveSkillTab] = useState('frontend');
+  const [activeProjectTab, setActiveProjectTab] = useState('simple');
+  const [flippedCards, setFlippedCards] = useState({});
+
+  useEffect(() => {
+    const updateMousePosition = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', updateMousePosition);
+    return () => window.removeEventListener('mousemove', updateMousePosition);
+  }, []);
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('');
+
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setSubmitStatus('Please fill in all fields.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Hello John,\n\nMy name is ${formData.name} and I would like to discuss the following:\n\n${formData.message}\n\nBest regards,\n${formData.name}\n\nEmail: ${formData.email}`
+    );
+
+    window.location.href = `mailto:john.ticatic@gmail.com?subject=${subject}&body=${body}`;
+    
+    setTimeout(() => {
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setSubmitStatus('Email client opened! Thank you for reaching out.');
+      setIsSubmitting(false);
+    }, 1000);
+  };
+
+  const toggleCardFlip = (projectId) => {
+    setFlippedCards(prev => ({
+      ...prev,
+      [projectId]: !prev[projectId]
+    }));
+  };
+
+  const skillCategories = {
+    frontend: [
+      { name: "React", level: "Beginner", icon: "⚛️" },
+      { name: "HTML/CSS", level: "Experienced", icon: "🌐" },
+      { name: "JavaScript", level: "Experienced", icon: "📜" },
+      { name: "TypeScript", level: "Beginner", icon: "📘" },
+      { name: "Tailwind CSS", level: "Experienced", icon: "🎨" },
+      { name: "Responsive Design", level: "Experienced", icon: "📱" }
+    ],
+    backend: [
+      { name: "C#", level: "Experienced", icon: "🔷" },
+      { name: ".NET Framework", level: "Experienced", icon: "🏗️" },
+      { name: "Node.js", level: "Beginner", icon: "🟢" },
+      { name: "Python", level: "Experienced", icon: "🐍" },
+      { name: "Express.js", level: "Beginner", icon: "🚀" },
+      { name: "API Development", level: "Experienced", icon: "🔗" }
+    ],
+    database: [
+      { name: "SQL Server", level: "Experienced", icon: "🗄️" },
+      { name: "MySQL", level: "Experienced", icon: "🐬" },
+      { name: "MongoDB", level: "Beginner", icon: "🍃" },
+      { name: "Database Design", level: "Experienced", icon: "📊" },
+      { name: "Stored Procedures", level: "Experienced", icon: "⚙️" },
+      { name: "Data Analysis", level: "Experienced", icon: "📈" }
+    ],
+    aitools: [
+      { name: "ChatGPT", level: "Experienced", icon: "🤖" },
+      { name: "Claude AI", level: "Experienced", icon: "🧠" },
+      { name: "GitHub Copilot", level: "Experienced", icon: "👥" },
+      { name: "Cursor IDE", level: "Experienced", icon: "⚡" },
+      { name: "AI Prompt Engineering", level: "Experienced", icon: "💭" },
+      { name: "AI-Assisted Development", level: "Experienced", icon: "🔧" }
+    ],
+    uiux: [
+      { name: "Figma", level: "Experienced", icon: "🎨" },
+      { name: "User Research", level: "Beginner", icon: "🔍" },
+      { name: "Wireframing", level: "Experienced", icon: "📋" },
+      { name: "Prototyping", level: "Experienced", icon: "🛠️" },
+      { name: "Adobe Photoshop", level: "Experienced", icon: "🖼️" },
+      { name: "Typography", level: "Beginner", icon: "✏️" }
+    ],
+    tools: [
+      { name: "Git & GitHub", level: "Experienced", icon: "📝" },
+      { name: "VS Code", level: "Experienced", icon: "💻" },
+      { name: "Visual Studio", level: "Experienced", icon: "🔵" },
+      { name: "Chrome DevTools", level: "Experienced", icon: "🔧" },
+      { name: "Crystal Reports", level: "Experienced", icon: "📋" },
+      { name: "Documentation", level: "Advanced", icon: "📚" },
+      { name: "Technical Writing", level: "Experienced", icon: "✍️" }
+    ]
+  };
+
+  const skillTabs = [
+    { key: 'frontend', label: 'Frontend', icon: '🌐' },
+    { key: 'backend', label: 'Backend', icon: '⚙️' },
+    { key: 'database', label: 'Database', icon: '🗄️' },
+    { key: 'aitools', label: 'AI Tools', icon: '🤖' },
+    { key: 'uiux', label: 'UI/UX', icon: '🎨' },
+    { key: 'tools', label: 'Tools & Others', icon: '🛠️' }
+  ];
+
+  const projects = {
+    simple: [
+      {
+        id: 'simple-1',
+        title: "Personal Portfolio Website",
+        description: "A responsive portfolio website built with React and Tailwind CSS, featuring dark mode, smooth animations, and contact form integration.",
+        image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop",
+        tags: ["React", "Tailwind CSS", "Responsive Design"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "This project demonstrates fundamental web development skills including component-based architecture, state management, and responsive design principles. Perfect for showcasing personal work and learning React basics."
+      },
+      {
+        id: 'simple-2',
+        title: "Todo List Application",
+        description: "A task management app with CRUD operations, state persistence, and filtering capabilities for organizing daily tasks.",
+        image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=400&fit=crop",
+        tags: ["JavaScript", "HTML/CSS", "React Hooks"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "A foundational project that teaches core programming concepts like data manipulation, event handling, and state management. Great for understanding how to build interactive user interfaces."
+      },
+      {
+        id: 'simple-3',
+        title: "Weather Dashboard",
+        description: "Real-time weather application fetching data from weather APIs with location search and 5-day forecast display.",
+        image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
+        tags: ["JavaScript", "API Integration", "CSS"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Introduces API integration concepts, async/await patterns, and data visualization. Teaches how to work with external data sources and handle asynchronous operations."
+      }
+    ],
+    complex: [
+      {
+        id: 'complex-1',
+        title: "E-Commerce Platform",
+        description: "Full-stack e-commerce solution with product catalog, shopping cart, user authentication, and payment gateway integration.",
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+        tags: ["React", "Node.js", "MongoDB", "Stripe"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Combines frontend and backend development with database management. Covers user authentication, payment processing, order management, and secure transaction handling."
+      },
+      {
+        id: 'complex-2',
+        title: "Social Media Dashboard",
+        description: "Multi-platform analytics dashboard aggregating data from various social media APIs with custom reporting and visualization.",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+        tags: ["React", "D3.js", "REST APIs", "Charts"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Advanced data visualization project involving multiple API integrations, complex state management, and interactive chart implementations using D3.js and Recharts."
+      },
+      {
+        id: 'complex-3',
+        title: "Project Management System",
+        description: "Collaborative project management tool with task tracking, team messaging, file sharing, and role-based access control.",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
+        tags: ["React", "Node.js", "PostgreSQL", "Socket.io"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Real-time collaboration features using WebSockets, complex database relationships, user permissions system, and file upload handling. Great for learning full-stack architecture."
+      }
+    ],
+    advanced: [
+      {
+        id: 'advanced-1',
+        title: "AI-Powered Code Assistant",
+        description: "Machine learning application that provides intelligent code suggestions, bug detection, and code optimization recommendations.",
+        image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop",
+        tags: ["Python", "TensorFlow", "NLP", "React"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Integrates machine learning models with web interface. Involves natural language processing, model training, API design for ML inference, and handling large datasets."
+      },
+      {
+        id: 'advanced-2',
+        title: "Real-Time Collaborative Editor",
+        description: "Google Docs-like editor with real-time collaboration, operational transformation, version control, and conflict resolution.",
+        image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&h=400&fit=crop",
+        tags: ["React", "WebRTC", "CRDT", "Node.js"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Advanced real-time synchronization using Conflict-free Replicated Data Types (CRDT), WebRTC peer connections, and operational transformation algorithms for concurrent editing."
+      },
+      {
+        id: 'advanced-3',
+        title: "Microservices Architecture Platform",
+        description: "Scalable microservices-based platform with service discovery, load balancing, API gateway, and containerized deployment.",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+        tags: ["Docker", "Kubernetes", "Node.js", "Redis"],
+        github: "https://github.com/aiannyyyy",
+        live: "#",
+        explanation: "Enterprise-level architecture with containerization, orchestration, message queues, caching strategies, and distributed systems design. Covers DevOps and cloud deployment."
+      }
+    ]
+  };
+
+  const projectTabs = [
+    { key: 'simple', label: 'Simple', icon: '🟢', description: 'Beginner-friendly projects' },
+    { key: 'complex', label: 'Complex', icon: '🟡', description: 'Intermediate projects' },
+    { key: 'advanced', label: 'Advanced', icon: '🔴', description: 'Expert-level projects' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-violet-50 dark:from-slate-950 dark:via-slate-900 dark:to-violet-950 transition-colors duration-500">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-violet-400/20 to-blue-400/20 blur-3xl"
+          style={{
+            left: mousePosition.x / 10,
+            top: mousePosition.y / 10,
+            transition: 'all 0.3s ease-out'
+          }}
+        ></div>
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-gradient-to-r from-blue-400/10 to-violet-400/10 blur-2xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-gradient-to-r from-violet-400/10 to-pink-400/10 blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <Navbar />
+
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="mb-8 animate-bounce">
+            <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-violet-600 to-blue-600 flex items-center justify-center shadow-2xl shadow-violet-500/30 overflow-hidden">
+              <img src="/public/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-violet-600 via-blue-600 to-violet-800 bg-clip-text text-transparent leading-tight">
+            John Adrian Ticatic
+          </h1>
+          
+          <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 space-y-2">
+            <div className="overflow-hidden"><p className="animate-slide-up">Learning Full-Stack Development</p></div>
+            <div className="overflow-hidden"><p className="animate-slide-up delay-200">UI/UX Design Learner</p></div>
+            <div className="overflow-hidden"><p className="animate-slide-up delay-400">Creative Problem Solver</p></div>
+          </div>
+
+          <p className="text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Exploring Full-Stack Development and UI/UX Design, with a passion for solving problems and building meaningful digital solutions.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+            <a href="#projects" className="group px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-violet-500/25 hover:shadow-2xl hover:shadow-violet-500/40">
+              <span className="flex items-center gap-2">
+                View My Work
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </a>
+            <a href="#contact" className="px-8 py-4 border-2 border-violet-300 dark:border-violet-700 text-violet-600 dark:text-violet-400 font-semibold rounded-full hover:bg-violet-50 dark:hover:bg-violet-950/50 transition-all duration-300">
+              Get In Touch
+            </a>
+          </div>
+
+          <div className="flex justify-center gap-6">
+            <a href="https://github.com/aiannyyyy" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Github className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-violet-600 dark:group-hover:text-violet-400" />
+            </a>
+            <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Linkedin className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+            </a>
+            <a href="mailto:john.ticatic@gmail.com" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Mail className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-green-600 dark:group-hover:text-green-400" />
+            </a>
+          </div>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-violet-500" />
+        </div>
+      </section>
+
+      <section id="about" className="py-24 px-6 lg:px-8 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">About Me</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-violet-600 to-blue-600 mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                I'm a developer with 2 years of experience creating web applications, desktop applications, and providing hardware troubleshooting and support in a corporate setting. My work allows me to combine problem-solving with building practical solutions that help people in their daily tasks.
+              </p>
+              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                I'm eager to collaborate with other developers and grow under the guidance of a mentor who can help me showcase my skills while learning from their expertise. I believe teamwork and continuous learning are key to becoming a better developer and creating meaningful projects.
+              </p>
+
+              <div className="grid grid-cols-2 gap-6 pt-6">
+                <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+                  <div className="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-2">5+</div>
+                  <div className="text-slate-600 dark:text-slate-300">Projects Completed</div>
+                </div>
+                <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">2+</div>
+                  <div className="text-slate-600 dark:text-slate-300">Years Experience</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="aspect-square rounded-3xl bg-gradient-to-br from-violet-100 to-blue-100 dark:from-violet-900/30 dark:to-blue-900/30 p-8 border border-violet-200/30 dark:border-violet-800/30">
+                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-violet-500/20 to-blue-500/20 flex items-center justify-center">
+                  <div className="text-6xl opacity-50">👨‍💻</div>
+                </div>
+              </div>
+              
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-violet-500 to-blue-500 rounded-2xl rotate-12 flex items-center justify-center shadow-xl">
+                <Code className="w-8 h-8 text-white" />
+              </div>
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl -rotate-12 flex items-center justify-center shadow-xl">
+                <Palette className="w-6 h-6 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="skills" className="py-24 px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">Skills & Expertise</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-violet-600 to-blue-600 mx-auto rounded-full"></div>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6 max-w-2xl mx-auto">
+              My technical skills span across different areas of development, from frontend to backend, with a focus on modern tools and AI-assisted development.
+            </p>
+          </div>
+
+          <div className="mb-12">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {skillTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveSkillTab(tab.key)}
+                  className={`group px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+                    activeSkillTab === tab.key
+                      ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-xl shadow-violet-500/25'
+                      : 'bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-violet-50 dark:hover:bg-violet-900/30 border border-violet-200/30 dark:border-violet-800/30'
+                  }`}
+                >
+                  <span className="text-lg">{tab.icon}</span>
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {skillCategories[activeSkillTab]?.map((skill) => (
+                <div 
+                  key={skill.name}
+                  className="group p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-500 hover:scale-105"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">{skill.icon}</div>
+                      <h3 className="text-lg font-bold text-slate-700 dark:text-slate-200">{skill.name}</h3>
+                    </div>
+                    
+                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      skill.level === 'Advanced'
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                        : skill.level === 'Experienced'
+                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                        : 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400'
+                    }`}>
+                      {skill.level}
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-1">
+                    {[1, 2, 3].map((level) => (
+                      <div
+                        key={level}
+                        className={`flex-1 h-2 rounded-full transition-colors duration-300 ${
+                          (skill.level === 'Advanced' && level <= 3) ||
+                          (skill.level === 'Experienced' && level <= 2) ||
+                          (skill.level === 'Beginner' && level <= 1)
+                            ? 'bg-gradient-to-r from-violet-500 to-blue-500'
+                            : 'bg-slate-200 dark:bg-slate-700'
+                        }`}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">1</div>
+              <div className="text-slate-600 dark:text-slate-300 font-medium">Advanced Skills</div>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">18</div>
+              <div className="text-slate-600 dark:text-slate-300 font-medium">Experienced Skills</div>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+              <div className="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-2">7</div>
+              <div className="text-slate-600 dark:text-slate-300 font-medium">Learning Skills</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" className="py-24 px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">Featured Projects</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-violet-600 to-blue-600 mx-auto rounded-full"></div>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6 max-w-2xl mx-auto">
+              Explore projects organized by complexity level. Click on any card to learn more about the technical implementation.
+            </p>
+          </div>
+
+          <div className="mb-12">
+            <div className="flex flex-wrap justify-center gap-3 mb-8">
+              {projectTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => {
+                    setActiveProjectTab(tab.key);
+                    setFlippedCards({});
+                  }}
+                  className={`group px-8 py-4 rounded-2xl font-medium transition-all duration-300 ${
+                    activeProjectTab === tab.key
+                      ? 'bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-xl shadow-violet-500/25 scale-105'
+                      : 'bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-violet-50 dark:hover:bg-violet-900/30 border border-violet-200/30 dark:border-violet-800/30'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{tab.icon}</span>
+                    <div className="text-left">
+                      <div className="font-bold">{tab.label}</div>
+                      <div className="text-xs opacity-75">{tab.description}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects[activeProjectTab]?.map((project) => (
+                <div 
+                  key={project.id}
+                  className="perspective-1000 h-96"
+                  style={{ perspective: '1000px' }}
+                >
+                  <div 
+                    className={`relative w-full h-full transition-transform duration-700 cursor-pointer ${
+                      flippedCards[project.id] ? 'rotate-y-180' : ''
+                    }`}
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: flippedCards[project.id] ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                    }}
+                    onClick={() => toggleCardFlip(project.id)}
+                  >
+                    <div 
+                      className="absolute w-full h-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-3xl overflow-hidden border border-violet-200/30 dark:border-violet-800/30 shadow-xl"
+                      style={{ backfaceVisibility: 'hidden' }}
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        
+                        <div className="absolute top-4 right-4 flex gap-2">
+                          <a 
+                            href={project.github}
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200"
+                          >
+                            <Github className="w-4 h-4 text-slate-700" />
+                          </a>
+                          <a 
+                            href={project.live}
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200"
+                          >
+                            <ExternalLink className="w-4 h-4 text-slate-700" />
+                          </a>
+                        </div>
+
+                        <div className="absolute bottom-4 right-4">
+                          <div className="p-2 bg-violet-600 text-white rounded-full">
+                            <RotateCcw className="w-5 h-5" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-3">
+                          {project.title}
+                        </h3>
+                        
+                        <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed text-sm">
+                          {project.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag) => (
+                            <span 
+                              key={tag}
+                              className="px-3 py-1 text-xs font-medium bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div 
+                      className="absolute w-full h-full bg-gradient-to-br from-violet-600 to-blue-600 rounded-3xl overflow-hidden border border-violet-400/30 shadow-xl flex flex-col"
+                      style={{ 
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)'
+                      }}
+                    >
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-xl font-bold text-white">Technical Details</h3>
+                          <div className="p-2 bg-white/20 rounded-full">
+                            <RotateCcw className="w-5 h-5 text-white" />
+                          </div>
+                        </div>
+                        
+                        <div className="flex-1 overflow-y-auto">
+                          <p className="text-white/90 leading-relaxed text-sm mb-6">
+                            {project.explanation}
+                          </p>
+
+                          <div className="space-y-3">
+                            <div className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
+                              <p className="text-white/80 text-sm">Key learning concepts and implementation details</p>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
+                              <p className="text-white/80 text-sm">Best practices and design patterns used</p>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
+                              <p className="text-white/80 text-sm">Technologies and frameworks integrated</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 pt-4 border-t border-white/20">
+                          <p className="text-white/60 text-xs text-center">Click to flip back</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <a 
+              href="https://github.com/aiannyyyy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-violet-500/25"
+            >
+              View All on GitHub
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="py-24 px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">Let's Work Together</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-violet-600 to-blue-600 mx-auto rounded-full"></div>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6">
+              Ready to bring your ideas to life? Let's discuss your next project.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+                <div className="w-12 h-12 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Email</h3>
+                  <p className="text-slate-600 dark:text-slate-400">john.ticatic@gmail.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full flex items-center justify-center">
+                  <Smartphone className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Phone</h3>
+                  <p className="text-slate-600 dark:text-slate-400">+693558225148 / +639619374348</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-violet-200/30 dark:border-violet-800/30">
+                <div className="w-12 h-12 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <Globe className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Location</h3>
+                  <p className="text-slate-600 dark:text-slate-400">Batangas, Philippines, 4223</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 justify-center pt-6">
+                <a href="https://github.com/aiannyyyy" className="p-4 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Github className="w-6 h-6" />
+                </a>
+                <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Linkedin className="w-6 h-6" />
+                </a>
+                <a href="mailto:john.ticatic@gmail.com" className="p-4 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Mail className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
+
+            <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-3xl p-8 border border-violet-200/30 dark:border-violet-800/30">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {submitStatus && (
+                  <div className={`p-4 rounded-xl text-center font-medium ${
+                    submitStatus.includes('Thank you') 
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800' 
+                      : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
+                  }`}>
+                    {submitStatus}
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Subject *</label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    placeholder="Project discussion"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message *</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 resize-none"
+                    placeholder="Tell me about your project..."
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl shadow-violet-500/25 flex items-center justify-center gap-2 ${
+                    isSubmitting 
+                      ? 'opacity-70 cursor-not-allowed' 
+                      : 'hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/40'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="w-5 h-5" />
+                      Hire Me
+                    </>
+                  )}
+                </button>
+
+                <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
+                  * Required fields. Clicking "Hire Me" will open your default email client.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-12 px-6 lg:px-8 border-t border-violet-200/30 dark:border-violet-800/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 bg-gradient-to-r from-violet-600 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
+                <img src="/public/logo.jpg" alt="Logo" className="h-full w-full object-cover" />
+              </div>
+              <span className="text-slate-600 dark:text-slate-300 font-medium">John Adrian Ticatic</span>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <a href="#" className="text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300">Privacy Policy</a>
+              <a href="#" className="text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-300">Terms of Service</a>
+            </div>
+
+            <div className="text-center md:text-right">
+              <p className="text-slate-600 dark:text-slate-400 text-sm">© 2025 John Adrian Ticatic. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <style>{`
+        @keyframes slide-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-slide-up {
+          animation: slide-up 0.8s ease-out forwards;
+        }
+
+        .delay-200 {
+          animation-delay: 200ms;
+        }
+
+        .delay-400 {
+          animation-delay: 400ms;
+        }
+
+        .delay-1000 {
+          animation-delay: 1000ms;
+        }
+      `}</style>
+    </div>
+  );
+}
