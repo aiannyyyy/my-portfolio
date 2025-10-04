@@ -37,6 +37,3 @@ It demonstrates my skills, displays my recent projects, and provides ways to con
 - 🧰 Easy to maintain and expand  
 
 ---
-
-## 📂 Project Structure
-
