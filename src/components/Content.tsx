@@ -178,7 +178,10 @@ export default function ModernPortfolio() {
       { name: "Crystal Reports", level: "Experienced", icon: "📋" },
       { name: "Documentation", level: "Advanced", icon: "📚" },
       { name: "Technical Writing", level: "Experienced", icon: "✍️" },
-      { name: "Postman", level: "Experienced", icon: "📮" }
+      { name: "Postman", level: "Experienced", icon: "📮" },
+      { name: "Electron JS", level: "Beginner", icon: "🖥️" },
+      { name: "Socket.io", level: "Beginner", icon: "🔌" },
+      { name: "Rest APIs", level: "Experienced", icon: "🌐" }
     ]
   };
 
