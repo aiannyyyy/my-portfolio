@@ -463,15 +463,21 @@ export default function ModernPortfolio() {
                         </div>
                       </div>
                       <div className="flex-1 overflow-y-auto">
-                        <p className="text-white/90 leading-relaxed text-sm mb-6">{project.explanation}</p>
+                        <p className="text-white/90 leading-relaxed text-sm mb-6">
+                          {project.explanation}
+                        </p>
                         <div className="space-y-3">
                           <div className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
-                            <p className="text-white/80 text-sm">Key learning concepts and implementation details</p>
+                            <p className="text-white/80 text-sm">
+                              These projects were developed primarily for personal learning and practice, so the focus is on functionality rather than design aesthetics.
+                            </p> 
                           </div>
                           <div className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
-                            <p className="text-white/80 text-sm">Best practices and design patterns used</p>
+                            <p className="text-white/80 text-sm">
+                              I also utilized AI tools and resources to assist me during the development process.
+                            </p> 
                           </div>
                         </div>
                       </div>
