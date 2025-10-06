@@ -259,7 +259,8 @@ export default function ModernPortfolio() {
       { name: "Chrome DevTools", level: "Experienced", icon: "🔧" },
       { name: "Crystal Reports", level: "Experienced", icon: "📋" },
       { name: "Documentation", level: "Advanced", icon: "📚" },
-      { name: "Technical Writing", level: "Experienced", icon: "✍️" }
+      { name: "Technical Writing", level: "Experienced", icon: "✍️" },
+      { name: "Postman", level: "Experienced", icon: "📮" }
     ]
   };
 
