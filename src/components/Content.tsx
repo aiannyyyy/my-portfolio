@@ -264,7 +264,7 @@ export default function ModernPortfolio() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="mb-8 animate-bounce">
             <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-2xl shadow-blue-500/30 overflow-hidden">
-              <img src="/public/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
+              <img src="logo.jpg" alt="Logo" className="w-full h-full object-cover" />
             </div>
           </div>
 
