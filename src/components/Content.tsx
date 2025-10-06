@@ -503,9 +503,14 @@ export default function ModernPortfolio() {
       <section id="contact" className="py-24 px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Let's Work Together</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              Open to Work
+            </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"></div>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6">Ready to bring your ideas to life? Let's discuss your next project.</p>
+            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6">
+              I'm actively seeking new career opportunities where I can contribute my skills and grow as a developer. 
+              If you think I’d be a good fit for your team, feel free to connect with me.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
