@@ -525,8 +525,8 @@ export default function ModernPortfolio() {
                   <Smartphone className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Phone</h3>
-                  <p className="text-slate-600 dark:text-slate-400">+693558225148 / +639619374348</p>
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Phone (Viber & WhatsApp)</h3>
+                  <p className="text-slate-600 dark:text-slate-400">+699558225148</p>
                 </div>
               </div>
 
