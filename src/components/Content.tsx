@@ -207,7 +207,7 @@ export default function ModernPortfolio() {
       tags: ["Node/Express JS", "HTML/CSS", "REST APIs"], 
       difficulty: "🔴 Advanced", 
       github: "https://github.com/aiannyyyy/TEST-NSCSL-DASHBOARD.git", 
-      explanation: "A foundational project teaching core programming concepts like data manipulation and event handling." },
+      explanation: "It integrates Oracle for analytical queries and MySQL for CRUD operations, with a Node.js + Express backend and a pure HTML, CSS, and JavaScript frontend." },
     { id: 'p3', 
       title: "File Management System", 
       description: "A modern file management system built for NSCSL to organize, upload, and manage files efficiently.", 
