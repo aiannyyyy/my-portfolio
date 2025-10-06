@@ -192,15 +192,62 @@ export default function ModernPortfolio() {
   ];
 
   const allProjects = [
-    { id: 'p1', title: "Personal Portfolio Website", description: "A responsive portfolio website built with React and Tailwind CSS, featuring dark mode, smooth animations, and contact form integration.", image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop", tags: ["React", "Tailwind CSS", "Responsive Design"], difficulty: "🟢 Simple", github: "https://github.com/aiannyyyy", live: "#", explanation: "This project demonstrates fundamental web development skills including component-based architecture, state management, and responsive design principles." },
-    { id: 'p2', title: "Todo List Application", description: "A task management app with CRUD operations, state persistence, and filtering capabilities.", image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=400&fit=crop", tags: ["JavaScript", "HTML/CSS", "React Hooks"], difficulty: "🟢 Simple", github: "https://github.com/aiannyyyy", live: "#", explanation: "A foundational project teaching core programming concepts like data manipulation and event handling." },
-    { id: 'p3', title: "Weather Dashboard", description: "Real-time weather application fetching data from weather APIs with location search.", image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop", tags: ["JavaScript", "API Integration", "CSS"], difficulty: "🟢 Simple", github: "https://github.com/aiannyyyy", live: "#", explanation: "Introduces API integration concepts and async/await patterns." },
-    { id: 'p4', title: "E-Commerce Platform", description: "Full-stack e-commerce solution with product catalog, shopping cart, and payment gateway.", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop", tags: ["React", "Node.js", "MongoDB", "Stripe"], difficulty: "🟡 Complex", github: "https://github.com/aiannyyyy", live: "#", explanation: "Combines frontend and backend development with database management and payment processing." },
-    { id: 'p5', title: "Social Media Dashboard", description: "Multi-platform analytics dashboard with custom reporting and visualization.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop", tags: ["React", "D3.js", "REST APIs"], difficulty: "🟡 Complex", github: "https://github.com/aiannyyyy", live: "#", explanation: "Advanced data visualization project with multiple API integrations." },
-    { id: 'p6', title: "Project Management System", description: "Collaborative tool with task tracking, team messaging, and file sharing.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop", tags: ["React", "Node.js", "PostgreSQL", "Socket.io"], difficulty: "🟡 Complex", github: "https://github.com/aiannyyyy", live: "#", explanation: "Real-time collaboration features using WebSockets and complex database relationships." },
-    { id: 'p7', title: "AI-Powered Code Assistant", description: "ML application providing intelligent code suggestions and bug detection.", image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop", tags: ["Python", "TensorFlow", "NLP", "React"], difficulty: "🔴 Advanced", github: "https://github.com/aiannyyyy", live: "#", explanation: "Integrates machine learning models with web interface for code analysis." },
-    { id: 'p8', title: "Real-Time Collaborative Editor", description: "Google Docs-like editor with real-time collaboration and version control.", image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&h=400&fit=crop", tags: ["React", "WebRTC", "CRDT", "Node.js"], difficulty: "🔴 Advanced", github: "https://github.com/aiannyyyy", live: "#", explanation: "Advanced real-time synchronization using CRDT and WebRTC." },
-    { id: 'p9', title: "Microservices Platform", description: "Scalable platform with service discovery, load balancing, and API gateway.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop", tags: ["Docker", "Kubernetes", "Node.js", "Redis"], difficulty: "🔴 Advanced", github: "https://github.com/aiannyyyy", live: "#", explanation: "Enterprise-level architecture with containerization and orchestration." }
+    { id: 'p1', 
+      title: "Personal Portfolio Website", 
+      description: "A responsive portfolio website built with React and Tailwind CSS, featuring dark mode, smooth animations, and contact form integration.", 
+      image: "/src/assets/p1.png", 
+      tags: ["React", "Tailwind CSS", "Typescript"], 
+      difficulty: "🟡 Complex", 
+      github: "https://github.com/aiannyyyy/my-portfolio.git",  
+      explanation: "It integrates Oracle for analytical queries and MySQL for CRUD operations, with a Node.js + Express backend and a pure HTML, CSS, and JavaScript frontend." },
+    { id: 'p2', 
+      title: "Corporate Dashboard", 
+      description: "This project is designed to manage and visualize corporate data through a centralized dashboard.", 
+      image: "/src/assets/p2.png", 
+      tags: ["Node/Express JS", "HTML/CSS", "REST APIs"], 
+      difficulty: "🔴 Advanced", 
+      github: "https://github.com/aiannyyyy/TEST-NSCSL-DASHBOARD.git", 
+      explanation: "A foundational project teaching core programming concepts like data manipulation and event handling." },
+    { id: 'p3', 
+      title: "File Management System", 
+      description: "A modern file management system built for NSCSL to organize, upload, and manage files efficiently.", 
+      image: "/src/assets/p3.png", 
+      tags: ["React/TS", "API Integration", "Node/Express JS"], 
+      difficulty: "🔴 Advanced", 
+      github: "https://github.com/aiannyyyy/nscsl-file-management-system.git",  
+      explanation: "Developed using React (TypeScript) for the frontend and Node.js + Express for the backend, styled with Tailwind CSS for a clean and responsive UI." },
+    { id: 'p4', 
+      title: "Corporate Website", 
+      description: "NSCSL Website is a simple, static corporate website built using HTML, CSS, and JavaScript.", 
+      image: "/src/assets/p4.png", 
+      tags: ["HTML", "CSS", "Vanilla JS"], 
+      difficulty: "🟢 Simple", 
+      github: "https://github.com/aiannyyyy/nscsl-website.git", 
+      explanation: "It serves as an online presence for the company, providing essential information such as services, contact details, and organizational background in a clean and professional layout." },
+    { id: 'p5', 
+      title: "Replacement System", 
+      description: "Replacement System is a VB.NET-based desktop application built for internal corporate use.", 
+      image: "/src/assets/p5.png", 
+      tags: [".NET", "Crystal Reports", "My SQL"], 
+      difficulty: "🟡 Complex", 
+      github: "https://github.com/aiannyyyy/ReplacementSystem.git", 
+      explanation: "It manages filter card replacement operations, providing a simple and efficient way to record, update, and monitor replacement transactions." },
+    { id: 'p6', 
+      title: "Image Verification System", 
+      description: "TRANSFER is a VB.NET-based application built for image verification within a local area network (LAN).", 
+      image: "/src/assets/p6.png",  
+      tags: [".NET", "Socket.io", "Entity Framework"], 
+      difficulty: "🟡 Complex", 
+      github: "https://github.com/aiannyyyy/TRANSFER.git", 
+      explanation: "It uses WebSocket technology to deliver real-time notifications between connected clients, providing instant updates during verification and image management workflows." },
+    { id: 'p7', 
+      title: "Accounting System", 
+      description: "A desktop-based Accounting System built with VB.NET, designed to simplify financial management, reporting, and record tracking.", 
+      image: "/src/assets/p7.png",  
+      tags: [".NET", "Crystal Reports", "Entity Framework"], 
+      difficulty: "🟡 Complex", 
+      github: "https://github.com/aiannyyyy/AccountingSystem.git", 
+      explanation: "This project was developed to manage accounting operations such as receivables, payables, and financial summaries. It provides an intuitive interface for users to view, search, and generate reports efficiently." }
   ];
 
   return (
@@ -384,10 +431,6 @@ export default function ModernPortfolio() {
                         <a href={project.github} onClick={(e) => e.stopPropagation()}
                           className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200">
                           <Github className="w-4 h-4 text-slate-700" />
-                        </a>
-                        <a href={project.live} onClick={(e) => e.stopPropagation()}
-                          className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200">
-                          <ExternalLink className="w-4 h-4 text-slate-700" />
                         </a>
                       </div>
                       <div className="absolute bottom-4 left-4">
