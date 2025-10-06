@@ -470,8 +470,8 @@ export default function ModernPortfolio() {
                           <div className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
                             <p className="text-white/80 text-sm">
-                              These projects were developed primarily for personal learning and practice, so the focus is on functionality rather than design aesthetics.
-                            </p> 
+                              These projects were developed both for personal learning and for supporting my current corporate work. The emphasis is on functionality and practicality, with design aesthetics being a secondary consideration.
+                            </p>
                           </div>
                           <div className="flex items-start gap-2">
                             <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
