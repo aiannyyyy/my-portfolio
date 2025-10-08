@@ -289,8 +289,12 @@ export default function ModernPortfolio() {
             <a href="#projects" className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-500/25">
               <span className="flex items-center gap-2">View My Work <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></span>
             </a>
-            <a href="#contact" className="px-8 py-4 border-2 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all duration-300">
-              Get In Touch
+            <a 
+              href="/path/to/your-cv.pdf" 
+              download="Your-Name-CV.pdf"
+              className="px-8 py-4 border-2 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all duration-300"
+            >
+              Download CV
             </a>
           </div>
 
