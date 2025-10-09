@@ -290,8 +290,8 @@ export default function ModernPortfolio() {
               <span className="flex items-center gap-2">View My Work <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></span>
             </a>
             <a 
-              href="/path/to/your-cv.pdf" 
-              download="Your-Name-CV.pdf"
+              href="/JohnAdrianTicatic_CV.pdf" 
+              download="John-Adrian-Ticatic_CV.pdf"
               className="px-8 py-4 border-2 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all duration-300"
             >
               Download CV
