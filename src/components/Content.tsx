@@ -13,18 +13,17 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setDarkMode(prefersDark);
-    if (prefersDark) document.documentElement.classList.add("dark");
+    const isDark = document.documentElement.classList.contains('dark');
+    setDarkMode(isDark);
   }, []);
 
   const toggleDarkMode = () => {
-    if (darkMode) {
-      document.documentElement.classList.remove("dark");
-      setDarkMode(false);
-    } else {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    if (newDarkMode) {
       document.documentElement.classList.add("dark");
-      setDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   };
 
@@ -43,10 +42,10 @@ function Navbar() {
     }`}>
       <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500 via-cyan-500 to-transparent opacity-80"></div>
       
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           <a href="#home" className="group transform hover:scale-105 transition-transform duration-300">
-            <div className="h-12 w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full flex items-center justify-center overflow-hidden">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full flex items-center justify-center overflow-hidden">
               <img src="/logo.jpg" alt="Logo" className="h-full w-full object-cover" />
             </div>
           </a>
@@ -68,21 +67,30 @@ function Navbar() {
             </button>
           </div>
 
-          <button onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
-            <div className={`transform transition-all duration-500 ${isOpen ? 'rotate-180 scale-110' : 'rotate-0'}`}>
-              {isOpen ? <span className="block w-6 h-6 text-slate-600 dark:text-slate-300">✕</span> : <span className="block w-6 h-6 text-slate-600 dark:text-slate-300">☰</span>}
-            </div>
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <button onClick={toggleDarkMode}
+              className="relative p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+              <div className={`transform transition-all duration-700 ${darkMode ? 'rotate-180' : 'rotate-0'}`}>
+                {darkMode ? <span className="block w-5 h-5 text-amber-400">☀</span> : <span className="block w-5 h-5 text-slate-600 dark:text-slate-300">🌙</span>}
+              </div>
+            </button>
+
+            <button onClick={() => setIsOpen(!isOpen)}
+              className="relative p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+              <div className={`transform transition-all duration-500 ${isOpen ? 'rotate-180 scale-110' : 'rotate-0'}`}>
+                {isOpen ? <span className="block w-5 h-5 text-slate-600 dark:text-slate-300">✕</span> : <span className="block w-5 h-5 text-slate-600 dark:text-slate-300">☰</span>}
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
       <div className={`md:hidden transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-screen opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-4'}`}>
         <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border-t border-blue-200/30 dark:border-blue-800/30 shadow-2xl">
-          <div className="px-6 py-8 space-y-2">
+          <div className="px-4 py-6 space-y-2">
             {navItems.map((item, index) => (
               <a key={index} href={item.href} onClick={() => setIsOpen(false)}
-                className="block px-6 py-4 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 hover:text-blue-600 dark:hover:text-blue-400 hover:translate-x-2 transform border border-transparent hover:border-blue-200/50 dark:hover:border-blue-700/50">
+                className="block px-4 py-3 text-slate-700 dark:text-slate-200 font-semibold rounded-2xl transition-all duration-500 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 hover:text-blue-600 dark:hover:text-blue-400 hover:translate-x-2 transform border border-transparent hover:border-blue-200/50 dark:hover:border-blue-700/50">
                 {item.label}
               </a>
             ))}
@@ -263,135 +271,135 @@ export default function ModernPortfolio() {
 
       <Navbar />
 
-      <section id="home" className="relative min-h-screen flex items-center justify-center px-6 lg:px-8">
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="mb-8 animate-bounce">
-            <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-2xl shadow-blue-500/30 overflow-hidden">
+          <div className="mb-6 sm:mb-8 animate-bounce">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-2xl shadow-blue-500/30 overflow-hidden">
               <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-800 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-800 bg-clip-text text-transparent leading-tight px-4">
             John Adrian Ticatic
           </h1>
           
-          <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 space-y-2">
+          <div className="text-base sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-6 sm:mb-8 space-y-2 px-4">
             <div className="overflow-hidden"><p className="animate-slide-up">Learning Full-Stack Development</p></div>
             <div className="overflow-hidden"><p className="animate-slide-up delay-200">UI/UX Design Learner</p></div>
             <div className="overflow-hidden"><p className="animate-slide-up delay-400">Creative Problem Solver</p></div>
           </div>
 
-          <p className="text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4">
             Exploring Full-Stack Development and UI/UX Design, with a passion for solving problems and building meaningful digital solutions.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <a href="#projects" className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-500/25">
-              <span className="flex items-center gap-2">View My Work <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></span>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4">
+            <a href="#projects" className="w-full sm:w-auto group px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-500/25 text-center">
+              <span className="flex items-center justify-center gap-2">View My Work <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" /></span>
             </a>
             <a 
               href="/JohnAdrianTicatic_CV.pdf" 
               download="John-Adrian-Ticatic_CV.pdf"
-              className="px-8 py-4 border-2 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all duration-300"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 font-semibold rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all duration-300 text-center"
             >
               Download CV
             </a>
           </div>
 
-          <div className="flex justify-center gap-6">
-            <a href="https://github.com/aiannyyyy" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
-              <Github className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+          <div className="flex justify-center gap-4 sm:gap-6 px-4">
+            <a href="https://github.com/aiannyyyy" target="_blank" rel="noopener noreferrer" className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Github className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
             </a>
-            <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
-              <Linkedin className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+            <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" target="_blank" rel="noopener noreferrer" className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Linkedin className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
             </a>
-            <a href="mailto:john.ticatic@gmail.com" className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
-              <Mail className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-green-600 dark:group-hover:text-green-400" />
+            <a href="mailto:john.ticatic@gmail.com" className="p-2.5 sm:p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group border border-slate-200 dark:border-slate-700">
+              <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-slate-300 group-hover:text-green-600 dark:group-hover:text-green-400" />
             </a>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block">
           <ChevronDown className="w-8 h-8 text-blue-500" />
         </div>
       </section>
 
-      <section id="about" className="py-24 px-6 lg:px-8 relative">
+      <section id="about" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">About Me</h2>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="space-y-4 sm:space-y-6">
+              <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 I'm a developer with 2 years of experience creating web applications, desktop applications, and providing hardware troubleshooting and support in a corporate setting.
               </p>
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 I'm eager to collaborate with other developers and grow under the guidance of a mentor who can help me showcase my skills while learning from their expertise.
               </p>
 
-              <div className="grid grid-cols-2 gap-6 pt-6">
-                <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
-                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
-                  <div className="text-slate-600 dark:text-slate-300">Projects Completed</div>
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-4 sm:pt-6">
+                <div className="text-center p-4 sm:p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
+                  <div className="text-xs sm:text-base text-slate-600 dark:text-slate-300">Projects Completed</div>
                 </div>
-                <div className="text-center p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
-                  <div className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">2+</div>
-                  <div className="text-slate-600 dark:text-slate-300">Years Experience</div>
+                <div className="text-center p-4 sm:p-6 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
+                  <div className="text-2xl sm:text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">2+</div>
+                  <div className="text-xs sm:text-base text-slate-600 dark:text-slate-300">Years Experience</div>
                 </div>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="aspect-square rounded-3xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 p-8 border border-blue-200/30 dark:border-blue-800/30">
+            <div className="relative mt-8 md:mt-0">
+              <div className="aspect-square rounded-3xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 p-6 sm:p-8 border border-blue-200/30 dark:border-blue-800/30">
                 <div className="w-full h-full rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
-                  <div className="text-6xl opacity-50">👨‍💻</div>
+                  <div className="text-4xl sm:text-6xl opacity-50">👨‍💻</div>
                 </div>
               </div>
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl rotate-12 flex items-center justify-center shadow-xl">
-                <Code className="w-8 h-8 text-white" />
+              <div className="absolute -top-2 sm:-top-4 -right-2 sm:-right-4 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl rotate-12 flex items-center justify-center shadow-xl">
+                <Code className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl -rotate-12 flex items-center justify-center shadow-xl">
-                <Palette className="w-6 h-6 text-white" />
+              <div className="absolute -bottom-2 sm:-bottom-4 -left-2 sm:-left-4 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl -rotate-12 flex items-center justify-center shadow-xl">
+                <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
           </div>
         </div>
       </section>
       
-      <section id="skills" className="py-24 px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
+      <section id="skills" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Skills & Expertise</h2>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Skills & Expertise</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"></div>
           </div>
 
-          <div className="mb-12">
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="mb-8 sm:mb-12">
+            <div className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8">
               {skillTabs.map((tab) => (
                 <button key={tab.key} onClick={() => setActiveSkillTab(tab.key)}
-                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+                  className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-1 sm:gap-2 text-xs sm:text-base ${
                     activeSkillTab === tab.key
                       ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-xl shadow-blue-500/25'
                       : 'bg-white/70 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200/30 dark:border-blue-800/30'
                   }`}>
-                  <span className="text-lg">{tab.icon}</span>
+                  <span className="text-base sm:text-lg">{tab.icon}</span>
                   <span className="hidden sm:inline">{tab.label}</span>
                 </button>
               ))}
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {skillCategories[activeSkillTab]?.map((skill) => (
                 <div key={skill.name}
-                  className="group p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:scale-105">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">{skill.icon}</div>
-                      <h3 className="text-lg font-bold text-slate-700 dark:text-slate-200">{skill.name}</h3>
+                  className="group p-4 sm:p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:scale-105">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="text-xl sm:text-2xl">{skill.icon}</div>
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-slate-700 dark:text-slate-200">{skill.name}</h3>
                     </div>
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+                    <div className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium ${
                       skill.level === 'Advanced' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                         : skill.level === 'Experienced' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
                         : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
@@ -412,17 +420,17 @@ export default function ModernPortfolio() {
         </div>
       </section>
 
-      <section id="projects" className="py-24 px-6 lg:px-8">
+      <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Featured Projects</h2>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Featured Projects</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"></div>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 mt-4 sm:mt-6 max-w-2xl mx-auto px-4">
               Explore my projects ranging from simple to advanced complexity. Click any card to learn more about the technical implementation.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {allProjects.map((project) => (
               <div key={project.id} className="perspective-1000 h-96" style={{ perspective: '1000px' }}>
                 <div className={`relative w-full h-full transition-transform duration-700 cursor-pointer ${flippedCards[project.id] ? 'rotate-y-180' : ''}`}
@@ -435,7 +443,7 @@ export default function ModernPortfolio() {
                       <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                       <div className="absolute top-4 right-4 flex gap-2">
-                        <a href={project.github} onClick={(e) => e.stopPropagation()}
+                        <a href={project.github} onClick={(e) => e.stopPropagation()} target="_blank" rel="noopener noreferrer"
                           className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200">
                           <Github className="w-4 h-4 text-slate-700" />
                         </a>
@@ -449,12 +457,12 @@ export default function ModernPortfolio() {
                         </div>
                       </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-3">{project.title}</h3>
-                      <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed text-sm">{project.description}</p>
+                    <div className="p-4 sm:p-6">
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-700 dark:text-slate-200 mb-2 sm:mb-3">{project.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 leading-relaxed text-xs sm:text-sm line-clamp-3">{project.description}</p>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
-                          <span key={tag} className="px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">{tag}</span>
+                          <span key={tag} className="px-2 sm:px-3 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">{tag}</span>
                         ))}
                       </div>
                     </div>
@@ -462,33 +470,33 @@ export default function ModernPortfolio() {
 
                   <div className="absolute w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 rounded-3xl overflow-hidden border border-blue-400/30 shadow-xl flex flex-col"
                     style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                    <div className="p-6 flex-1 flex flex-col">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-bold text-white">Technical Details</h3>
+                    <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <h3 className="text-lg sm:text-xl font-bold text-white">Technical Details</h3>
                         <div className="p-2 bg-white/20 rounded-full">
-                          <RotateCcw className="w-5 h-5 text-white" />
+                          <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                         </div>
                       </div>
                       <div className="flex-1 overflow-y-auto">
-                        <p className="text-white/90 leading-relaxed text-sm mb-6">
+                        <p className="text-white/90 leading-relaxed text-xs sm:text-sm mb-4 sm:mb-6">
                           {project.explanation}
                         </p>
-                        <div className="space-y-3">
+                        <div className="space-y-2 sm:space-y-3">
                           <div className="flex items-start gap-2">
-                            <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
-                            <p className="text-white/80 text-sm">
+                            <div className="w-2 h-2 bg-white rounded-full mt-1 flex-shrink-0"></div>
+                            <p className="text-white/80 text-xs sm:text-sm">
                               These projects were developed both for personal learning and for supporting my current corporate work.
                             </p>
                           </div>
                           <div className="flex items-start gap-2">
-                            <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
-                            <p className="text-white/80 text-sm">
+                            <div className="w-2 h-2 bg-white rounded-full mt-1 flex-shrink-0"></div>
+                            <p className="text-white/80 text-xs sm:text-sm">
                               I also utilized AI tools and resources to assist me during the development process.
                             </p> 
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4 pt-4 border-t border-white/20">
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/20">
                         <p className="text-white/60 text-xs text-center">Click to flip back</p>
                       </div>
                     </div>
@@ -498,77 +506,77 @@ export default function ModernPortfolio() {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <a href="https://github.com/aiannyyyy" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-500/25">
-              View All on GitHub <ArrowRight className="w-5 h-5" />
+              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-500/25 text-sm sm:text-base">
+              View All on GitHub <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="py-24 px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
+      <section id="contact" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               Open to Work
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"></div>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mt-6">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 mt-4 sm:mt-6 px-4">
               I'm actively seeking new career opportunities where I can contribute my skills and grow as a developer. 
-              If you think I’d be a good fit for your team, feel free to connect with me.
+              If you think I'd be a good fit for your team, feel free to connect with me.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-white" />
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Email</h3>
-                  <p className="text-slate-600 dark:text-slate-400">john.ticatic@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center">
-                  <Smartphone className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Phone (Viber & WhatsApp)</h3>
-                  <p className="text-slate-600 dark:text-slate-400">+699558225148</p>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200 text-sm sm:text-base">Email</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base break-all">john.ticatic@gmail.com</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-sky-500 rounded-full flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-slate-700 dark:text-slate-200">Location</h3>
-                  <p className="text-slate-600 dark:text-slate-400">Batangas, Philippines, 4223</p>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200 text-sm sm:text-base">Phone (Viber & WhatsApp)</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base">+699558225148</p>
                 </div>
               </div>
 
-              <div className="flex gap-4 justify-center pt-6">
-                <a href="https://github.com/aiannyyyy" className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Github className="w-6 h-6" />
+              <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-blue-200/30 dark:border-blue-800/30">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-slate-700 dark:text-slate-200 text-sm sm:text-base">Location</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base">Batangas, Philippines, 4223</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 sm:gap-4 justify-center pt-4 sm:pt-6">
+                <a href="https://github.com/aiannyyyy" target="_blank" rel="noopener noreferrer" className="p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Github className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
-                <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" className="p-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Linkedin className="w-6 h-6" />
+                <a href="https://www.linkedin.com/in/john-adrian-ticatic-a080b6206/" target="_blank" rel="noopener noreferrer" className="p-3 sm:p-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
-                <a href="mailto:john.ticatic@gmail.com" className="p-4 rounded-full bg-gradient-to-r from-blue-500 to-sky-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
-                  <Mail className="w-6 h-6" />
+                <a href="mailto:john.ticatic@gmail.com" className="p-3 sm:p-4 rounded-full bg-gradient-to-r from-blue-500 to-sky-500 text-white hover:scale-110 transition-all duration-300 shadow-lg">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
               </div>
             </div>
 
-            <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-3xl p-8 border border-blue-200/30 dark:border-blue-800/30">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-blue-200/30 dark:border-blue-800/30">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 {submitStatus && (
-                  <div className={`p-4 rounded-xl text-center font-medium ${
+                  <div className={`p-3 sm:p-4 rounded-xl text-center font-medium text-xs sm:text-sm ${
                     submitStatus.includes('Thank you') 
                       ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800' 
                       : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
@@ -576,45 +584,45 @@ export default function ModernPortfolio() {
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name *</label>
+                  <label className="block text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name *</label>
                   <input type="text" name="name" value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })} required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 text-sm sm:text-base"
                     placeholder="Your full name" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email *</label>
+                  <label className="block text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email *</label>
                   <input type="email" name="email" value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })} required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 text-sm sm:text-base"
                     placeholder="your.email@example.com" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Subject *</label>
+                  <label className="block text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Subject *</label>
                   <input type="text" name="subject" value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })} required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 text-sm sm:text-base"
                     placeholder="Project discussion" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message *</label>
+                  <label className="block text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message *</label>
                   <textarea name="message" value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })} required rows={4}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 resize-none"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-slate-700 dark:text-slate-200 resize-none text-sm sm:text-base"
                     placeholder="Tell me about your project..."></textarea>
                 </div>
 
                 <button type="submit" disabled={isSubmitting}
-                  className={`w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 ${
+                  className={`w-full px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 text-sm sm:text-base ${
                     isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/40'
                   }`}>
                   {isSubmitting ? (
-                    <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Sending...</>
+                    <><div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Sending...</>
                   ) : (
-                    <><Mail className="w-5 h-5" />Hire Me</>
+                    <><Mail className="w-4 h-4 sm:w-5 sm:h-5" />Hire Me</>
                   )}
                 </button>
               </form>
@@ -623,17 +631,17 @@ export default function ModernPortfolio() {
         </div>
       </section>
 
-      <footer className="py-12 px-6 lg:px-8 border-t border-blue-200/30 dark:border-blue-800/30">
+      <footer className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 border-t border-blue-200/30 dark:border-blue-800/30">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full flex items-center justify-center overflow-hidden">
                 <img src="/logo.jpg" alt="Logo" className="h-full w-full object-cover" />
               </div>
-              <span className="text-slate-600 dark:text-slate-300 font-medium">John Adrian Ticatic</span>
+              <span className="text-slate-600 dark:text-slate-300 font-medium text-sm sm:text-base">John Adrian Ticatic</span>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-slate-600 dark:text-slate-400 text-sm">© 2025 John Adrian Ticatic. All rights reserved.</p>
+              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">© 2025 John Adrian Ticatic. All rights reserved.</p>
             </div>
           </div>
         </div>
@@ -648,6 +656,12 @@ export default function ModernPortfolio() {
         .delay-200 { animation-delay: 200ms; }
         .delay-400 { animation-delay: 400ms; }
         .delay-1000 { animation-delay: 1000ms; }
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
       `}</style>
     </div>
   );
