@@ -108,12 +108,48 @@ export default function ModernPortfolio() {
   const [submitStatus, setSubmitStatus] = useState('');
   const [activeSkillTab, setActiveSkillTab] = useState('frontend');
   const [flippedCards, setFlippedCards] = useState({});
+  const [captchaVerified, setCaptchaVerified] = useState(false);
 
   useEffect(() => {
     const updateMousePosition = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', updateMousePosition);
     return () => window.removeEventListener('mousemove', updateMousePosition);
   }, []);
+
+  // Load reCAPTCHA v3 script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js?render=6Lczq_grAAAAAOAqYYzrzyANL7SXylZyVpC_T0BC';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
+
+  // Simple CAPTCHA verification (client-side demo)
+  const verifyCaptcha = () => {
+    if (window.grecaptcha) {
+      window.grecaptcha.ready(() => {
+        window.grecaptcha.execute('6Lczq_grAAAAAOAqYYzrzyANL7SXylZyVpC_T0BC', { action: 'submit' }).then(() => {
+          setCaptchaVerified(true);
+        });
+      });
+    } else {
+      // Fallback: Simple math CAPTCHA
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      const answer = prompt(`CAPTCHA: What is ${num1} + ${num2}?`);
+      if (parseInt(answer) === num1 + num2) {
+        setCaptchaVerified(true);
+      } else {
+        setSubmitStatus('CAPTCHA verification failed. Please try again.');
+      }
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,12 +162,19 @@ export default function ModernPortfolio() {
       return;
     }
 
+    if (!captchaVerified) {
+      setSubmitStatus('Please verify the CAPTCHA first.');
+      setIsSubmitting(false);
+      return;
+    }
+
     const subject = encodeURIComponent(formData.subject);
     const body = encodeURIComponent(`Hello John,\n\nMy name is ${formData.name} and I would like to discuss the following:\n\n${formData.message}\n\nBest regards,\n${formData.name}\n\nEmail: ${formData.email}`);
     window.location.href = `mailto:john.ticatic@gmail.com?subject=${subject}&body=${body}`;
     
     setTimeout(() => {
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setCaptchaVerified(false);
       setSubmitStatus('Email client opened! Thank you for reaching out.');
       setIsSubmitting(false);
     }, 1000);
@@ -615,9 +658,30 @@ export default function ModernPortfolio() {
                     placeholder="Tell me about your project..."></textarea>
                 </div>
 
-                <button type="submit" disabled={isSubmitting}
+                <div className="p-4 sm:p-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                  <button 
+                    type="button"
+                    onClick={verifyCaptcha}
+                    disabled={captchaVerified}
+                    className={`w-full px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base flex items-center justify-center gap-2 ${
+                      captchaVerified
+                        ? 'bg-green-500 text-white cursor-default'
+                        : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105'
+                    }`}>
+                    {captchaVerified ? (
+                      <>✓ CAPTCHA Verified</>
+                    ) : (
+                      <>🛡️ Verify CAPTCHA</>
+                    )}
+                  </button>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 text-center">
+                    Please verify you're human before submitting
+                  </p>
+                </div>
+
+                <button type="submit" disabled={isSubmitting || !captchaVerified}
                   className={`w-full px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl shadow-blue-500/25 flex items-center justify-center gap-2 text-sm sm:text-base ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/40'
+                    isSubmitting || !captchaVerified ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/40'
                   }`}>
                   {isSubmitting ? (
                     <><div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Sending...</>
