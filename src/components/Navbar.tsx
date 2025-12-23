@@ -29,6 +29,7 @@ export default function Navbar() {
       setDarkMode(false);
     } else {
       document.documentElement.classList.add("dark");
+      
       setDarkMode(true);
     }
   };

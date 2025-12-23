@@ -109,6 +109,8 @@ export default function ModernPortfolio() {
   const [activeSkillTab, setActiveSkillTab] = useState('frontend');
   const [flippedCards, setFlippedCards] = useState({});
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [captchaQuestion, setCaptchaQuestion] = useState({ num1: 0, num2: 0 });
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
 
   useEffect(() => {
     const updateMousePosition = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
@@ -116,38 +118,27 @@ export default function ModernPortfolio() {
     return () => window.removeEventListener('mousemove', updateMousePosition);
   }, []);
 
-  // Load reCAPTCHA v3 script
+  // Generate CAPTCHA on mount
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://www.google.com/recaptcha/api.js?render=6Lczq_grAAAAAOAqYYzrzyANL7SXylZyVpC_T0BC';
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-    return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
+    generateCaptcha();
   }, []);
 
-  // Simple CAPTCHA verification (client-side demo)
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    setCaptchaQuestion({ num1, num2 });
+    setCaptchaAnswer('');
+    setCaptchaVerified(false);
+  };
+
   const verifyCaptcha = () => {
-    if (window.grecaptcha) {
-      window.grecaptcha.ready(() => {
-        window.grecaptcha.execute('6Lczq_grAAAAAOAqYYzrzyANL7SXylZyVpC_T0BC', { action: 'submit' }).then(() => {
-          setCaptchaVerified(true);
-        });
-      });
+    const correctAnswer = captchaQuestion.num1 + captchaQuestion.num2;
+    if (parseInt(captchaAnswer) === correctAnswer) {
+      setCaptchaVerified(true);
+      setSubmitStatus('');
     } else {
-      // Fallback: Simple math CAPTCHA
-      const num1 = Math.floor(Math.random() * 10) + 1;
-      const num2 = Math.floor(Math.random() * 10) + 1;
-      const answer = prompt(`CAPTCHA: What is ${num1} + ${num2}?`);
-      if (parseInt(answer) === num1 + num2) {
-        setCaptchaVerified(true);
-      } else {
-        setSubmitStatus('CAPTCHA verification failed. Please try again.');
-      }
+      setSubmitStatus('Incorrect answer. Please try again.');
+      generateCaptcha();
     }
   };
 
@@ -175,6 +166,7 @@ export default function ModernPortfolio() {
     setTimeout(() => {
       setFormData({ name: '', email: '', subject: '', message: '' });
       setCaptchaVerified(false);
+      generateCaptcha();
       setSubmitStatus('Email client opened! Thank you for reaching out.');
       setIsSubmitting(false);
     }, 1000);
@@ -658,25 +650,40 @@ export default function ModernPortfolio() {
                     placeholder="Tell me about your project..."></textarea>
                 </div>
 
-                <div className="p-4 sm:p-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                <div className="p-4 sm:p-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl space-y-3">
+                  <div className="text-center">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                      🛡️ Security Check: What is {captchaQuestion.num1} + {captchaQuestion.num2}?
+                    </label>
+                    <input
+                      type="number"
+                      value={captchaAnswer}
+                      onChange={(e) => setCaptchaAnswer(e.target.value)}
+                      disabled={captchaVerified}
+                      className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-center text-lg font-semibold focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+                      placeholder="Your answer"
+                    />
+                  </div>
                   <button 
                     type="button"
                     onClick={verifyCaptcha}
-                    disabled={captchaVerified}
+                    disabled={captchaVerified || !captchaAnswer}
                     className={`w-full px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base flex items-center justify-center gap-2 ${
                       captchaVerified
                         ? 'bg-green-500 text-white cursor-default'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105'
+                        : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed'
                     }`}>
                     {captchaVerified ? (
-                      <>✓ CAPTCHA Verified</>
+                      <>✓ Verified</>
                     ) : (
-                      <>🛡️ Verify CAPTCHA</>
+                      <>Verify Answer</>
                     )}
                   </button>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 text-center">
-                    Please verify you're human before submitting
-                  </p>
+                  {captchaVerified && (
+                    <p className="text-xs text-green-600 dark:text-green-400 text-center font-medium">
+                      ✓ Verification successful!
+                    </p>
+                  )}
                 </div>
 
                 <button type="submit" disabled={isSubmitting || !captchaVerified}

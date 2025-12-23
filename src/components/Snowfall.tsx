@@ -67,7 +67,7 @@ const Snowfall = () => {
               strokeWidth="1"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-white drop-shadow-lg"
+              className="text-blue-500 dark:text-white drop-shadow-lg"
             >
               <path d="M12 2v20M2 12h20M5.64 5.64l12.72 12.72M5.64 18.36L18.36 5.64M12 2L9 5l3 3 3-3-3-3zM12 22l-3-3 3-3 3 3-3 3zM2 12l3-3 3 3-3 3-3-3zM22 12l-3 3-3-3 3-3 3 3z" />
             </svg>
