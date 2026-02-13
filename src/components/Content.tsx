@@ -252,11 +252,7 @@ export default function ModernPortfolio() {
       image: "/2.png", 
       tags: ["Node/Express JS", "TypeScript", "REST APIs"], 
       difficulty: "🔴 Advanced", 
-<<<<<<< HEAD
-      github: "https://github.com/aiannyyyy/nscsl-dashboard.git", 
-=======
       github: "https://github.com/aiannyyyy/nscsl-modern-dashboard.git", 
->>>>>>> 03181de (changing the github link for dashboard)
       explanation: "It integrates Oracle for analytical queries and MySQL for CRUD operations, with a Node.js + Express backend and a pure HTML, CSS, and JavaScript frontend." },
     { id: 'p3', 
       title: "File Management System", 
