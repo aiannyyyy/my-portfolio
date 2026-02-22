@@ -169,7 +169,7 @@ const allProjects = [
     title: "Task Management App",
     description: "A full-stack MERN task management application featuring drag-and-drop task organization and responsive UI.",
     image: "/task-app.png",
-    difficulty: "🟡 Advanced",
+    difficulty: "🔴 Advanced",
     github: "https://github.com/aiannyyyy/task-management-app.git",
     explanation: "Developed a full-stack task management system using the MERN stack. Users can create, update, delete, and organize tasks with intuitive drag-and-drop functionality. The application focuses on clean UI/UX, state management, responsive design, dark mode support, and smooth animations.",
     frontend: ["React", "Tailwind CSS", "Typescript"],
