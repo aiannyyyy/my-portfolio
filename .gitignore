@@ -6,11 +6,22 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+<<<<<<< HEAD
+=======
+
+>>>>>>> 47c07c23025afd218406179ee2b21a0cb4fbf8e8
 node_modules
 dist
 dist-ssr
 *.local
 
+<<<<<<< HEAD
+=======
+# Documents
+*.docx
+*.pdf
+
+>>>>>>> 47c07c23025afd218406179ee2b21a0cb4fbf8e8
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -21,6 +32,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 
 # Assets (CV, pictures, and personal files)
 src/assets/
@@ -46,3 +58,5 @@ coverage/
 
 # Build outputs
 *.tsbuildinfo
+=======
+>>>>>>> 47c07c23025afd218406179ee2b21a0cb4fbf8e8
